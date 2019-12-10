@@ -41,12 +41,11 @@ class Namespace(Blueprint):
                 schema = schema_cls()
                 errors = schema.validate(g.json)
                 if errors:
-                    validate_exc = exc.BadRequest()
+                    validate_exc = exc.BadRequest('Validate request occur error')
                     setattr(validate_exc, 'errors', errors)
                     raise validate_exc
-                else:
-                    data = schema.load(g.json)
-                    setattr(g, 'json', ImmutableMultiDict(data.items()))
+                data = schema.load(g.json)
+                setattr(g, 'json', ImmutableMultiDict(data.items()))
                 return func(*args, **kwargs)
             return decorator
         return outer_fn
@@ -56,9 +55,11 @@ class Namespace(Blueprint):
             def decorator(*args, **kwargs):
                 ret = func(*args, **kwargs)
                 schema = schema_cls()
-                marshal_result = schema.dump(ret)
-                if marshal_result.errors:
+                errors = schema.validate(ret)
+                if errors:
                     raise exc.InternalServerError()
-                return jsonify(**marshal_result.data)
+                else:
+                    data = schema.dump(ret)
+                    return jsonify(**data)
             return decorator
         return outer_fn

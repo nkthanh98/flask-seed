@@ -1,10 +1,10 @@
 # coding=utf-8
 
-import os
-import logging.config
 from flask import Flask
+from werkzeug.contrib.profiler import ProfilerMiddleware
 
 from . import config
+from . import logging
 from . import helpers
 from . import extends
 from . import exceptions
@@ -23,13 +23,11 @@ def create_app(config_name):
     """
     app = Flask(__name__)
     app.config.from_object(config.get_config(config_name))
+    app.wsgi_app = ProfilerMiddleware(app.wsgi_app, stream=None,
+                                      profile_dir=app.config['CPROF_DIR'])
 
-    logging.config.fileConfig(
-        fname=os.path.join(app.config['ROOT_DIR'], 'app', 'config', 'log.ini'),
-        defaults={'logfile': app.config['LOG_FILE']},
-    )
-
-    routes.register_namespace(app)
+    logging.init_app(app)
     exceptions.init_app(app)
+    routes.init_app(app)
 
     return app

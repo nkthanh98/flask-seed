@@ -1,8 +1,7 @@
 # coding=utf-8
 
-from flask import Flask
 from .examples import example_ns
 
 
-def register_namespace(app: Flask):
+def init_app(app):
     app.register_blueprint(example_ns, url_prefix='')

@@ -16,6 +16,4 @@ example_ns = Namespace('examples', __name__)
 class ExampleResource(MethodView):
     @example_ns.expect(schemas.ExamplePost)
     def post(self):
-        raise IOError('Lmao')
         return {'name': 'Thanh', 'age': 20}
-

@@ -8,11 +8,14 @@ class BaseConfig:
 
     LOG_FILE = os.getenv('LOG_FILE', os.path.join('/tmp', 'app.log'))
 
+    CPROF_DIR = os.getenv('CPROF_DIR', os.path.join('/tmp', 'cprof'))
+
 
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
 
     TESTING = True
+
 
 class TestingConfig(BaseConfig):
     DEBUG = False
