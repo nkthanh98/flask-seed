@@ -18,7 +18,7 @@ logger = logging.getLogger('request')
 
 class MethodView(views.MethodView):
     def dispatch_request(self, *args, **kwargs):
-        logger.info(f'{request.environ["REMOTE_ADDR"]} - {request.environ["REQUEST_URI"]} - {request.environ["REQUEST_METHOD"]}')
+        logger.info(f'{request.environ["REMOTE_ADDR"]} - {request.environ["REQUEST_URI"]} - {request.environ["REQUEST_METHOD"]}') #pylint: disable=C0301,W1202
         setattr(g, 'json', request.json)
         setattr(g, 'args', request.args)
         return super().dispatch_request(*args, **kwargs)
@@ -55,11 +55,7 @@ class Namespace(Blueprint):
             def decorator(*args, **kwargs):
                 ret = func(*args, **kwargs)
                 schema = schema_cls()
-                errors = schema.validate(ret)
-                if errors:
-                    raise exc.InternalServerError()
-                else:
-                    data = schema.dump(ret)
-                    return jsonify(**data)
+                data = schema.dump(ret)
+                return jsonify(**data)
             return decorator
         return outer_fn

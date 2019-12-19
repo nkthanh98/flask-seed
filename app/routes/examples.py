@@ -15,5 +15,10 @@ example_ns = Namespace('examples', __name__)
 @example_ns.route('/examples')
 class ExampleResource(MethodView):
     @example_ns.expect(schemas.ExamplePost)
+    @example_ns.marshal_with(schemas.ExamplePost)
     def post(self):
-        return {'name': 'Thanh', 'age': 20}
+        class Person:
+            def __init__(self):
+                self.full_name = 'Thanh'
+                self.age = 20
+        return Person()
