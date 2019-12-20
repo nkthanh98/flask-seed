@@ -1,5 +1,7 @@
 # coding=utf-8
 
+import os
+
 from flask import Flask
 from werkzeug.contrib.profiler import ProfilerMiddleware
 
@@ -16,6 +18,10 @@ from . import services
 from . import routes
 
 
+def _before_create_app(app):
+    os.makedirs(app.config['CPROF_DIR'], exist_ok=True)
+
+
 def create_app(config_name):
     """create_app
 
@@ -23,6 +29,9 @@ def create_app(config_name):
     """
     app = Flask(__name__)
     app.config.from_object(config.get_config(config_name))
+
+    _before_create_app(app)
+
     app.wsgi_app = ProfilerMiddleware(app.wsgi_app, stream=None,
                                       profile_dir=app.config['CPROF_DIR'])
 

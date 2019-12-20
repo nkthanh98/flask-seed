@@ -6,5 +6,5 @@ from app.extends import Schema
 
 
 class ExamplePost(Schema):
-    name = fields.String(required=True)
+    full_name = fields.String(required=True)
     age = fields.Integer()

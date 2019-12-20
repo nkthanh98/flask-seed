@@ -4,6 +4,7 @@ Logging extension
 """
 
 import os
+import inspect
 import traceback as tb
 import logging.config
 from logging import Formatter as BaseFormatter
@@ -16,9 +17,15 @@ class Formatter(BaseFormatter):
              [line]
     """
     def formatException(self, exc_info): # pylint:disable=W0221
-        result = ''
-        for item in tb.extract_tb(exc_info[2]):
-            result = f'{item.lineno:<6} {item.filename:} \n\t{item.line}\n{result}'
+        exc_type, exc, traceback = exc_info
+        result = inspect.cleandoc(
+            f'''
+            Exception: {exc_type.__name__}
+            Message  : {str(exc)}
+            '''
+        )
+        for item in tb.extract_tb(traceback):
+            result = f'{result}\n{item.lineno:<6} {item.filename:} \n\t{item.line}'
         return result
 
 
