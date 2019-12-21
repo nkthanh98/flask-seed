@@ -7,7 +7,7 @@ from app.extends.flask import (
     MethodView
 )
 from app import schemas
-from app.services import Pet as PetService
+from app.services import PetService
 
 
 pet_ns = Namespace('pet', __name__)

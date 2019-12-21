@@ -5,7 +5,7 @@ from app import create_app
 from app.models import db
 
 
-@pytest.fixture(scope='class')
+@pytest.fixture(scope='function')
 def test_client(request):
     if request.cls is not None:
         flask_app = create_app('testing')
