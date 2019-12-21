@@ -38,5 +38,6 @@ def create_app(config_name):
     logging.init_app(app)
     exceptions.init_app(app)
     routes.init_app(app)
+    models.init_app(app)
 
     return app

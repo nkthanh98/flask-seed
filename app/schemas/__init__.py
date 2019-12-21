@@ -1,3 +1,3 @@
 # coding=utf-8
 
-from .examples import ExamplePost
+from .pet import Pet
