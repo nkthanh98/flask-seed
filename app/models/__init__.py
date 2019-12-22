@@ -13,5 +13,5 @@ def init_app(app):
     migrate.init_app(app)
 
     logging.getLogger('model').info(
-        f'App connected to `{app.config["DB_NAME"]}` database'
+        f'App connected to `{app.config.get("DB_NAME", app.config["SQLALCHEMY_DATABASE_URI"])}` database'
     )
