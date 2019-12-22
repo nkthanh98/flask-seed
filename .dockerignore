@@ -1,0 +1,11 @@
+./requirements/requirements-test.txt
+.git
+./README.md
+./pytest.ini
+./.pylintrc
+./coverage.xml
+./tags
+./tests
+./env
+./LICENSE
+./migrations

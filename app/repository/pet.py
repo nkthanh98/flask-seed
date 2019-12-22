@@ -1,6 +1,6 @@
 #coding=utf-8
 
-from app import exceptions as exc
+from werkzeug import exceptions as exc
 from app.models import Pet as PetModel
 from app.models import db
 from app.models.pet import PetStatus
@@ -25,7 +25,7 @@ class PetRepository:
     def update_pet(self, pet_id, data):
         pet = self.get_pet(pet_id)
         if pet is None:
-            raise exc.HTTPException('Pet not found')
+            raise exc.NotFound('Pet not found')
         if 'name' in data:
             pet.name = data['name']
         if 'status' in data:
@@ -39,7 +39,7 @@ class PetRepository:
     def delete_pet(self, pet_id):
         pet = self.get_pet(pet_id)
         if pet is None:
-            raise exc.HTTPException('Pet not found')
+            raise exc.NotFound('Pet not found')
         db.session.delete(pet)
         db.session.commit()
         return pet

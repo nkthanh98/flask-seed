@@ -18,7 +18,7 @@ logger = logging.getLogger('request')
 
 class MethodView(views.MethodView):
     def dispatch_request(self, *args, **kwargs):
-        logger.info(f'{request.environ["REMOTE_ADDR"]} - {request.environ["REQUEST_URI"]} - {request.environ["REQUEST_METHOD"]}') #pylint: disable=C0301,W1202
+        logger.info(f'{request.environ.get("REMOTE_ADDR")} - {request.path} - {request.method}') #pylint: disable=C0301,W1202
         setattr(g, 'json', request.json)
         setattr(g, 'args', request.args)
         return super().dispatch_request(*args, **kwargs)

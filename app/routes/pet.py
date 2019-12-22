@@ -1,7 +1,8 @@
 # coding=utf-8
 
+import logging
+from werkzeug import exceptions as exc
 from flask import g
-
 from app.extends.flask import (
     Namespace,
     MethodView
@@ -27,7 +28,10 @@ class Pet(MethodView):
     @pet_ns.marshal_with(schemas.Pet)
     def get(self, pet_id):
         service = PetService()
-        return service.get_pet(pet_id)
+        pet = service.get_pet(pet_id)
+        if pet:
+            return pet
+        raise exc.NotFound('Pet not found')
 
     @pet_ns.expect(schemas.Pet)
     @pet_ns.marshal_with(schemas.Pet)

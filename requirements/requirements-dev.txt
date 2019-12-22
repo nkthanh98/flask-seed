@@ -32,3 +32,4 @@ Werkzeug==0.16.0
 wrapt==1.11.2
 zipp==0.6.0
 Flask-Migrate==2.5.2
+pymysql==0.9.3

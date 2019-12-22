@@ -40,4 +40,8 @@ def create_app(config_name):
     routes.init_app(app)
     models.init_app(app)
 
+    @app.before_first_request
+    def initial_database():
+        models.db.create_all()
+
     return app

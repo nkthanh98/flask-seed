@@ -18,7 +18,17 @@ class DevelopmentConfig(BaseConfig):
 
     TESTING = False
 
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
+    DB_HOST = os.getenv('DB_HOST', '127.0.0.1')
+
+    DB_PORT = os.getenv('DB_PORT', 3306)
+
+    DB_USER = os.getenv('DB_USER', 'root')
+
+    DB_PASS = os.getenv('DB_PASS', 'password')
+
+    DB_NAME = os.getenv('DB_NAME', 'app')
+
+    SQLALCHEMY_DATABASE_URI = f'mysql+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
 
 
 class TestingConfig(BaseConfig):
@@ -33,6 +43,18 @@ class ProductionConfig(BaseConfig):
     DEBUG = False
 
     TESTING = False
+
+    DB_HOST = os.getenv('DB_HOST', '127.0.0.1')
+
+    DB_PORT = os.getenv('DB_PORT', 3306)
+
+    DB_USER = os.getenv('DB_USER', 'root')
+
+    DB_PASS = os.getenv('DB_PASS', 'password')
+
+    DB_NAME = os.getenv('DB_NAME', 'app')
+
+    SQLALCHEMY_DATABASE_URI = f'mysql+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
 
 
 def get_config(name):

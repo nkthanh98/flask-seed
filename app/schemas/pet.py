@@ -5,7 +5,6 @@ from marshmallow import (
     validate,
 )
 from app.models.pet import PetStatus
-
 from app.extends import Schema
 
 
