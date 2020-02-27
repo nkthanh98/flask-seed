@@ -35,17 +35,17 @@ class Namespace(Blueprint):
             return handler
         return decorator
 
-    def expect(self, schema_cls):
+    def expect(self, schema_cls, location='body'):
         def outer_fn(func):
             def decorator(*args, **kwargs):
                 schema = schema_cls()
-                errors = schema.validate(g.json)
+                errors = schema.validate(request.json)
                 if errors:
                     validate_exc = exc.BadRequest('Validate request occur error')
                     setattr(validate_exc, 'errors', errors)
                     raise validate_exc
-                data = schema.load(g.json)
-                setattr(g, 'json', ImmutableMultiDict(data.items()))
+                data = schema.load(request.json)
+                setattr(g, 'json', ImmutableMultiDict(**data))
                 return func(*args, **kwargs)
             return decorator
         return outer_fn

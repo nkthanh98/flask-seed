@@ -3,7 +3,7 @@
 import os
 
 from flask import Flask
-from werkzeug.contrib.profiler import ProfilerMiddleware
+from werkzeug.middleware.profiler import ProfilerMiddleware
 
 from . import config
 from . import logging
