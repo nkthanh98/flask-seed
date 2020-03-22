@@ -6,9 +6,9 @@ import os
 class BaseConfig:
     ROOT_DIR = os.getcwd()
 
-    LOG_FILE = os.getenv('LOG_FILE', os.path.join('/tmp', 'app.log'))
+    LOG_FILE = os.getenv('LOG_FILE', os.path.join('app.log'))
 
-    CPROF_DIR = os.getenv('CPROF_DIR', os.path.join('/tmp', 'cprof'))
+    CPROF_DIR = os.getenv('CPROF_DIR', os.path.join('cprof'))
 
     SQLALCHEMY_TRACK_MODIFICATIONS = True
 
